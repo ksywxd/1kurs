@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class 553503_Siamionava
+public class _553503_Siamionava
 {
 	public Class1()
 	{
