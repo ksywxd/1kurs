@@ -2,34 +2,31 @@
 
 public class _553503_Siamionava
 {
-	public Class1()
+	static void Main(string[] args)
 	{
-		static void Main(string[])
-		{
-			Consol.WriteLine("Введите делимое:");
-			string first = Console.ReadLine();
-			Consol.WriteLine("Введите делитель:");
-			string second = Console.ReadLine();
+		Consol.WriteLine("Введите делимое:");
+		string first = Console.ReadLine();
+		Consol.WriteLine("Введите делитель:");
+		string second = Console.ReadLine();
 			
-			if (double.TryParse(first, out double delimoe) && double.TryParse(second, out double delitel))
+		if (double.TryParse(first, out double delimoe) && double.TryParse(second, out double delitel))
+		{
+			if (delitel != 0)
 			{
-				if (delitel != 0)
-				{
-					double result = 0;
-					result = delimoe / delitel;
-					Console.WriteLine($"Результат: {result}");
-				}
-				else
-				{
-				Console.WriteLine("Деление на 0");
-				}
+				double result = 0;
+				result = delimoe / delitel;
+				Console.WriteLine($"Результат: {result}");
 			}
 			else
 			{
-				Console.WriteLine("Введено не число")
+			Console.WriteLine("Деление на 0");
 			}
-
-		Console.ReadKey();
 		}
+		else
+		{
+			Console.WriteLine("Введено не число")
+		}
+
+	Console.ReadKey();
 	}
 }
