@@ -11,12 +11,12 @@ public class 553503_Siamionava
 			Consol.WriteLine("Введите делитель:");
 			string second = Console.ReadLine();
 			
-			if (double.TryParse(first, out double delimoe && double.TryParse(second, out double delitel)
+			if (double.TryParse(first, out double delimoe) && double.TryParse(second, out double delitel))
 			{
 				if (delitel != 0)
 				{
 					double result = 0;
-					result = delitel / delitel;
+					result = delimoe / delitel;
 					Console.WriteLine($"Результат: {result}");
 				}
 				else
@@ -28,6 +28,8 @@ public class 553503_Siamionava
 			{
 				Console.WriteLine("Введено не число")
 			}
+
+		Console.ReadKey();
 		}
 	}
 }
