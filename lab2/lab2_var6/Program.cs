@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace lab2_var6
+namespace Task1
 {
     class Program
     {
@@ -9,10 +9,8 @@ namespace lab2_var6
             bool exit = false;
             while (!exit)
             {
-                Console.WriteLine(" Lab2 var 6");
-                Console.WriteLine("Choose task:");
-                Console.WriteLine("1. Task1");
-                Console.WriteLine("2. Task2");
+                Console.WriteLine("     MENU");
+                Console.WriteLine("1. Continue");
                 Console.WriteLine("0. Exit");
 
                 string choice = Console.ReadLine()?.Trim() ?? "";
@@ -22,14 +20,11 @@ namespace lab2_var6
                     case "1":
                         Task1();
                         break;
-                    case "2":
-                        //Task2();
-                        break;
                     case "0":
                         exit = true;
                         break;
                     default:
-                        Console.WriteLine("Incorrect input");
+                        Console.WriteLine("Incorrect input. Repeat");
                         break;
                 }
             }
@@ -37,9 +32,9 @@ namespace lab2_var6
 
         static void Task1()
         {
-            bool repeat = true;
+            bool valid = false;
 
-            do 
+            while (!valid)
             {
                 Console.Write("Vvedite dvuhznachnoe chislo: ");
                 string? input = Console.ReadLine();
@@ -51,6 +46,8 @@ namespace lab2_var6
                     }
                     else
                     {
+                        valid = true;
+
                         int first = num / 10;
                         int second = num % 10;
 
@@ -69,36 +66,13 @@ namespace lab2_var6
                         {
                             Console.WriteLine("Equal");
                         }
-
-                        bool validChoice = false;
-                        do
-                        {
-                            Console.WriteLine("\n1. Repeat");
-                            Console.WriteLine("0. Exit to main menu");
-
-                            string choice = Console.ReadLine()?.Trim() ?? "";
-                            switch (choice)
-                            {
-                                case "1":
-                                    repeat = true;
-                                    validChoice = true;
-                                    break;
-                                case "0":
-                                    repeat = false;
-                                    validChoice |= true;
-                                    break;
-                                default:
-                                    Console.WriteLine("Incorrect choice");
-                                    break;
-                            }
-                        } while (!validChoice);
                     }
                 }
                 else
                 {
                     Console.WriteLine("Incorrect input. Repeat");
                 }
-            } while (repeat);
+            }
         }
     }
 }
