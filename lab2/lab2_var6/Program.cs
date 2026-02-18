@@ -6,6 +6,8 @@ namespace Task1
     {
         static void Main()
         {
+            Task1();
+
             bool exit = false;
             while (!exit)
             {
