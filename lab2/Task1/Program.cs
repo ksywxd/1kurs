@@ -15,7 +15,7 @@ namespace Task1
                 Console.WriteLine("1. Continue");
                 Console.WriteLine("0. Exit");
 
-                string choice = Console.ReadLine()?.Trim() ?? "";
+                string choice = Console.ReadLine();
 
                 switch (choice)
                 {
@@ -39,7 +39,7 @@ namespace Task1
             while (!valid)
             {
                 Console.Write("Vvedite dvuhznachnoe chislo: ");
-                string? input = Console.ReadLine();
+                string input = Console.ReadLine();
                 if (int.TryParse(input, out int num))
                 {
                     if (num < 10 || num > 99)
