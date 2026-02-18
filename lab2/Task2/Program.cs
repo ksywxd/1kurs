@@ -15,7 +15,7 @@ namespace Task2
                 Console.WriteLine("1. Continue");
                 Console.WriteLine("0. Exit");
 
-                string choice = Console.ReadLine()?.Trim() ?? "";
+                string choice = Console.ReadLine();
 
                 switch (choice)
                 {
@@ -40,9 +40,9 @@ namespace Task2
             {
                 Console.WriteLine("Vvedite koordinati tochki:");
                 Console.Write("x: ");
-                string? input1 = Console.ReadLine();
+                string input1 = Console.ReadLine();
                 Console.Write("y: ");
-                string? input2 = Console.ReadLine();
+                string input2 = Console.ReadLine();
                 if (double.TryParse(input1, out double x) && double.TryParse(input2, out double y))
                 {
                     double eps = 1e-9;
