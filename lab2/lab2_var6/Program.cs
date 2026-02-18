@@ -67,7 +67,7 @@ namespace lab2_var6
                         }
                         else
                         {
-                            Console.WriteLine("Equil");
+                            Console.WriteLine("Equal");
                         }
 
                         bool validChoice = false;
@@ -81,9 +81,11 @@ namespace lab2_var6
                             {
                                 case "1":
                                     repeat = true;
+                                    validChoice = true;
                                     break;
                                 case "0":
                                     repeat = false;
+                                    validChoice |= true;
                                     break;
                                 default:
                                     Console.WriteLine("Incorrect choice");
