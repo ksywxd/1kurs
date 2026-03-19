@@ -9,11 +9,39 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Animator.cpp \
+    Canvas.cpp \
+    Circle.cpp \
+    Ellipse.cpp \
+    EquilateralTriangle.cpp \
+    Hexagon.cpp \
+    Rhombus.cpp \
+    Shape.cpp \
+    Triangle.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    polygon.cpp \
+    rectangle.cpp \
+    regularpolygon.cpp \
+    square.cpp \
+    star.cpp
 
 HEADERS += \
-    mainwindow.h
+    Animator.h \
+    Canvas.h \
+    Circle.h \
+    Ellipse.h \
+    EquilateralTriangle.h \
+    Hexagon.h \
+    Rhombus.h \
+    Shape.h \
+    Triangle.h \
+    mainwindow.h \
+    polygon.h \
+    rectangle.h \
+    regularpolygon.h \
+    square.h \
+    star.h
 
 FORMS += \
     mainwindow.ui
