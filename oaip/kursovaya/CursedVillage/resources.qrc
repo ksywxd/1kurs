@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>images/volume_on.png</file>
+        <file>images/volume_off.png</file>
+        <file>images/backgroundMenu1.jpg</file>
+        <file>images/title.png</file>
+        <file>images/village.jpg</file>
+    </qresource>
+    <qresource prefix="/audio">
+        <file>audio/undertaleMenu.wav</file>
+        <file>audio/type_click.wav</file>
+        <file>audio/type_click1.wav</file>
+        <file>audio/type_click2.wav</file>
+    </qresource>
+</RCC>
