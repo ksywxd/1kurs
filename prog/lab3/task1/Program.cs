@@ -5,7 +5,7 @@ namespace Task1
     {
         static void Main()
         {
-            Swap mySwap = new Swap();
+            Swap mySwap = new();
             int input = 0;
 
             Console.Write("Enter a 3-digit num: ");

@@ -1,21 +1,20 @@
 ﻿using System;
-using Task2.Services;
 namespace Task2
 {
     class Program
     {
         static void Main()
         {
-            Calculate myCalc = new Calculate();
+            Calculate myCalc = new();
+            Console.Write("Enter any number: ");
             double input = 0.0;
 
-            Console.Write("Enter any number: ");
             while (!double.TryParse(Console.ReadLine(), out input))
             {
                 Console.WriteLine("Invalid input. Try again.");
             }
 
-            double res = myCalc.DoCalculate(input);     
+            myCalc.DoCalculate(input);     
         }
     }
 }

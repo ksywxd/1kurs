@@ -1,17 +1,19 @@
 ﻿using System;
+
 namespace Task3
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            DateService ds = new DateService();
+            DateService ds = new();
 
-            string day = ds.GetDay("27.11.2007");
-            Console.WriteLine($"Day of the week: {day}");
+            string validStr = InputValid.GetValidDateString("Enter date (e.g., 01.01.2000): ");
+            Console.WriteLine($"Day of the week: {ds.GetDay(validStr)}");
 
-            int daysBetween = ds.GetDaysSpan(27, 11, 2007);
-            Console.WriteLine($"Days between today and 27.11.2007: {daysBetween}");
+            Console.WriteLine("\nEnter the date in parts:");
+            DateTime validIntDate = InputValid.GetValidDateInt();
+            Console.WriteLine($"Days between dates: {ds.GetDaysSpan(validIntDate)}");
         }
     }
 }

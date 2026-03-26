@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Task2.Services
+namespace Task2
 {
-    internal class Calculate
+    public class Calculate
     {
-        public double DoCalculate(double z)
+        public void DoCalculate(double z)
         {
             double y = 0;
             double x = 0;
-            short branch = 0;
+            int branch = 0;
 
             if (z > 0)
             {
@@ -25,8 +22,7 @@ namespace Task2.Services
                 y = Math.Cos(5 * x) + Math.Sin(0.2 * x) + Math.Exp(x);
             }
 
-            Console.Write($"Result: {y}. Branch: {branch}.");
-            return y;
+            Console.Write($"Result: {y}. Branch: {branch}.");  
         }
     }
 }
