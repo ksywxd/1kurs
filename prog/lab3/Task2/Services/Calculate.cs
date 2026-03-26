@@ -6,7 +6,7 @@ namespace Task2.Services
 {
     internal class Calculate
     {
-        public double doCalculate(double z)
+        public double DoCalculate(double z)
         {
             double y = 0;
             double x = 0;

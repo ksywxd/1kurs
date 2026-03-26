@@ -15,7 +15,7 @@ namespace Task2
                 Console.WriteLine("Invalid input. Try again.");
             }
 
-            double res = myCalc.doCalculate(input);     
+            double res = myCalc.DoCalculate(input);     
         }
     }
 }
