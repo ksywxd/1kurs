@@ -3,7 +3,7 @@ namespace Task1
 {
     public class Swap
     {
-        public int doSwap(int num)
+        public int Swap(int num)
         {
             int n1 = num / 100;
             int n2 = (num / 10) % 10;

@@ -16,7 +16,7 @@ namespace Task1
                 Console.WriteLine("Invalid input. Try again.");
             }
 
-            int res = mySwap.doSwap(input);
+            int res = mySwap.Swap(input);
             Console.Write(res);
         }
     }
