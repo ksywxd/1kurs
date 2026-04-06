@@ -8,7 +8,7 @@ namespace Task3
         {
             DateService ds = new();
 
-            string validStr = InputValid.GetValidDateString("Enter date (e.g., 01.01.2000): ");
+            DateTime validStr = InputValid.GetValidDateString("Enter date (e.g., 01.01.2000): ");
             Console.WriteLine($"Day of the week: {ds.GetDay(validStr)}");
 
             Console.WriteLine("\nEnter the date in parts:");
