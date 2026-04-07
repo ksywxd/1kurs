@@ -51,10 +51,10 @@ namespace Task1
             _price += amount;
         }
 
-        public static void DecreasePrice(double currentPrice, double amount)
+        public static void DecreasePrice(double amount)
         {
             if (amount < 0) throw new ArgumentException("Amount must be positive.");
-            if (currentPrice - amount < 0) throw new ArgumentException("Invalid amount. Current price is less than the entered amount.");
+            if (_price - amount < 0) throw new ArgumentException("Invalid amount. Current price is less than the entered amount.");
             _price -= amount;
         }
     }

@@ -164,7 +164,7 @@ namespace Task1
                         if (!double.TryParse(decInput, out double decAmount))
                             throw new InputValidationException("Amount must be a number.");
 
-                        TV.DecreasePrice(TV.Price, decAmount);
+                        TV.DecreasePrice(decAmount);
                         Console.WriteLine($"Price decreased by {decAmount}. New price: {TV.Price} $.");
                         break;
 
