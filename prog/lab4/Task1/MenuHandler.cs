@@ -121,7 +121,7 @@ namespace Task1
             Console.WriteLine($"Total revenue: {_shop.GetTotalRevenue():F2} $.");
         }
 
-        private void ChangePriceMenu()
+        private static void ChangePriceMenu()
         {
             Console.Clear();
             Console.WriteLine($"Current price: {TV.Price} $.");
@@ -138,8 +138,10 @@ namespace Task1
                     case "1":
                         Console.Write("Enter new price: ");
                         string input = Console.ReadLine() ?? "";
+
                         if (!double.TryParse(input, out double newPrice))
                             throw new InputValidationException("Price must be a number.");
+
                         TV.Price = newPrice;
                         Console.WriteLine($"Price set to {TV.Price} $.");
                         break;
@@ -147,8 +149,10 @@ namespace Task1
                     case "2":
                         Console.Write("Enter amount to increase: ");
                         string incInput = Console.ReadLine() ?? "";
+
                         if (!double.TryParse(incInput, out double incAmount))
                             throw new InputValidationException("Amount must be a number.");
+
                         TV.IncreasePrice(incAmount);
                         Console.WriteLine($"Price increased by {incAmount}. New price: {TV.Price} $.");
                         break;
@@ -156,9 +160,11 @@ namespace Task1
                     case "3":
                         Console.Write("Enter amount to decrease: ");
                         string decInput = Console.ReadLine() ?? "";
+
                         if (!double.TryParse(decInput, out double decAmount))
                             throw new InputValidationException("Amount must be a number.");
-                        TV.DecreasePrice(decAmount);
+
+                        TV.DecreasePrice(TV.Price, decAmount);
                         Console.WriteLine($"Price decreased by {decAmount}. New price: {TV.Price} $.");
                         break;
 

@@ -8,54 +8,54 @@ namespace Task1
 {
     public class TV
     {
-        private static double price = 0;
-        private string model = "Unknown";
-        private int id = 0;
-        private static readonly Validator _validator = new Validator();
+        private static double _price = 0;
+        private string _model = "Unknown";
+        private int _id = 0;
 
         public static double Price
         {
-            get { return price; }
+            get { return _price; }
             set 
             {
-                if (value < 0) throw new ArgumentException("Value below zero.");
-                price = value; 
+                Validator.ValidatePrice(value);
+                _price = value; 
             }
         }
 
         public string Model 
         { 
-            get { return model; } 
-            set { model = value; }
+            get { return _model; } 
+            set { _model = value; }
         }
 
         public int ID
         {
-            get { return id; }
-            set { id = value; }
+            get { return _id; }
+            set { _id = value; }
         }
 
         public TV(string newModel)
         {
-            model = newModel;
+            _model = newModel;
         }
 
         public TV(string newModel, int newID)
         {
-            model = newModel;
-            id = newID;
+            _model = newModel;
+            _id = newID;
         }
         
         public static void IncreasePrice(double amount)
         {
-            _validator.ValidatePriceChange(amount, true, price);
-            price += amount;
+            if (amount < 0) throw new ArgumentException("Amount must be positive.");
+            _price += amount;
         }
 
-        public static void DecreasePrice(double amount)
+        public static void DecreasePrice(double currentPrice, double amount)
         {
-            _validator.ValidatePriceChange(amount, false, price);
-            price -= amount;
+            if (amount < 0) throw new ArgumentException("Amount must be positive.");
+            if (currentPrice - amount < 0) throw new ArgumentException("Invalid amount. Current price is less than the entered amount.");
+            _price -= amount;
         }
     }
 }

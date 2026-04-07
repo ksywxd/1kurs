@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace Task1
 {
-    public class Validator
+    public static class Validator
     {
-        public void ValidTV(TV tv, IEnumerable<TV> existingTVs)
+        public static void ValidTV(TV tv, IEnumerable<TV> existingTVs)
         {
             if (existingTVs == null)
                 throw new ArgumentNullException("List cannot be null.");
@@ -19,7 +19,7 @@ namespace Task1
             ValidID(tv.ID, existingTVs);
         }
 
-        public void ValidModel(string  model, IEnumerable<TV> existingTVs)
+        public static void ValidModel(string  model, IEnumerable<TV> existingTVs)
         {
             if (existingTVs == null)
                 throw new ArgumentNullException("List cannot be null.");
@@ -31,7 +31,7 @@ namespace Task1
                 throw new InvalidOperationException($"TV with name {model} already exists.");
         }
 
-        public void ValidID(int id, IEnumerable<TV> existingTVs)
+        public static void ValidID(int id, IEnumerable<TV> existingTVs)
         {
             if (existingTVs == null)
                 throw new ArgumentNullException("List cannot be null.");
@@ -43,13 +43,10 @@ namespace Task1
                 throw new InvalidOperationException($"TV with ID {id} already exists.");
         }
 
-        public void ValidatePriceChange(double amount, bool isIncrease, double currentPrice)
+        public static void ValidatePrice(double price)
         {
-            if (amount < 0)
-                throw new ArgumentException("Amount cannot be negative.");
-
-            if (!isIncrease && currentPrice - amount < 0)
-                throw new ArgumentException("Price cannot become negative.");
+            if (price < 0)
+                throw new ArgumentException("Price cannot be negative.");
         }
     }
 

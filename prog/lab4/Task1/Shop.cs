@@ -9,13 +9,12 @@ namespace Task1
     public sealed class Shop
     {
         private static Shop? _instance;
-        private readonly Validator _validator;
-        private string name = "Unknown";
+        private string _name = "Unknown";
 
         public string Name
         {
-            get { return name; }
-            set { name = value; }
+            get { return _name; }
+            set { _name = value; }
         }
 
         private readonly List<TV> _tvList;
@@ -23,7 +22,6 @@ namespace Task1
         private Shop()
         {
             _tvList = new List<TV>();
-            _validator = new Validator();
         }
 
         public static Shop Instance
@@ -35,11 +33,11 @@ namespace Task1
             }
         }
 
-        private int purchaseCount = 0;
+        private int _purchaseCount = 0;
 
         public int Count
         {
-            get { return purchaseCount; }
+            get { return _purchaseCount; }
         }
 
         private int GenerateUniqueId()
@@ -52,7 +50,7 @@ namespace Task1
 
         public void AddTV(TV tv)
         {
-            _validator.ValidTV(tv, _tvList);
+            Validator.ValidTV(tv, _tvList);
 
             if (tv.ID == 0)
             {
@@ -65,18 +63,18 @@ namespace Task1
 
         public void AddTV(string newModel)
         {
-            _validator.ValidModel(newModel, _tvList);
+            Validator.ValidModel(newModel, _tvList);
             int newId = GenerateUniqueId();
             _tvList.Add(new TV(newModel, newId));
         }
 
         public void AddTV(string newModel, int newID)
         {
-            _validator.ValidModel(newModel, _tvList);
+            Validator.ValidModel(newModel, _tvList);
 
             if (newID == 0) { newID = GenerateUniqueId(); }
 
-            else { _validator.ValidID(newID, _tvList); }
+            else { Validator.ValidID(newID, _tvList); }
 
             _tvList.Add(new TV(newModel, newID));
         }
@@ -89,7 +87,7 @@ namespace Task1
                 throw new InvalidOperationException($"TV '{model}' not found.");
 
             _tvList.Remove(tv);
-            purchaseCount++;
+            _purchaseCount++;
             Console.WriteLine($"Sold {tv.Model} (ID {tv.ID})");
         }
 
@@ -101,7 +99,7 @@ namespace Task1
                 throw new InvalidOperationException($"TV with ID {id} not found.");
 
             _tvList.Remove(tv);
-            purchaseCount++;
+            _purchaseCount++;
             Console.WriteLine($"Sold {tv.Model} (ID {tv.ID})");
         }
 
@@ -110,7 +108,7 @@ namespace Task1
             Console.Clear();
             Console.WriteLine($"\nShop name: {Name}");
             Console.WriteLine($"Price: {TV.Price} $.");
-            Console.WriteLine($"Sold: {purchaseCount} pcs.");
+            Console.WriteLine($"Sold: {_purchaseCount} pcs.");
             if (_tvList.Count == 0)
             {
                 Console.WriteLine("The assortment is empty.");
@@ -125,7 +123,7 @@ namespace Task1
 
         public double GetTotalRevenue()
         {
-            return TV.Price * purchaseCount;
+            return TV.Price * _purchaseCount;
         }
     }
 }
