@@ -19,7 +19,7 @@ namespace Task1
             {
                 Console.Clear();
                 Console.WriteLine($"   {Shop.Instance.Name}   ");
-                Console.WriteLine($"Price: {TV.Price} $.");
+                Console.WriteLine($"Price: {TV.Price}$.");
                 Console.WriteLine("1. Add TV");
                 Console.WriteLine("2. Sell TV");
                 Console.WriteLine("3. Show all TVs");
@@ -62,21 +62,17 @@ namespace Task1
             Console.Write("Enter model: ");
             string model = Console.ReadLine() ?? "";
 
-            if (string.IsNullOrWhiteSpace(model))
-                throw new InputValidationException("Model cannot be empty.");
+            if (string.IsNullOrWhiteSpace(model)) throw new InputValidationException("Model cannot be empty.");
 
-            Console.Write("Enter ID (leave blank for automatic ID): ");
+            Console.Write("Enter ID (leave blank or 0 for automatic ID): ");
             string idInput = Console.ReadLine() ?? "";
             int id = 0;
             bool hasId = !string.IsNullOrWhiteSpace(idInput) && int.TryParse(idInput, out id);
 
-            if (!string.IsNullOrWhiteSpace(idInput) && !hasId)
-                throw new InputValidationException("ID must be a number.");
+            if (!string.IsNullOrWhiteSpace(idInput) && !hasId) throw new InputValidationException("ID must be a number.");
 
-            if (hasId)
-                _shop.AddTV(model, id);
-            else
-                _shop.AddTV(model);
+            if (hasId) _shop.AddTV(model, id);
+            else       _shop.AddTV(model);
 
             Console.WriteLine("TV added successfully.");
         }
@@ -94,19 +90,17 @@ namespace Task1
             {
                 Console.Write("Enter ID: ");
 
-                if (!int.TryParse(Console.ReadLine(), out int id))
-                    throw new InputValidationException("ID must be a number.");
-
-                _shop.SellTV(id);
-            }
-
-            else if (opt == "2")
-            {
-                Console.Write("Enter model: ");
-                string model = Console.ReadLine() ?? "";
-
-                if (string.IsNullOrWhiteSpace(model))
-                    throw new InputValidationException("Model cannot be empty.");
+                if (!int.TryParse(Console.ReadLine(), out int id)) throw new InputValidationException("ID must be a number.");
+                                                                   
+                _shop.SellTV(id);                                  
+            }                                                      
+                                                                   
+            else if (opt == "2")                                   
+            {                                                      
+                Console.Write("Enter model: ");                    
+                string model = Console.ReadLine() ?? "";           
+                                                                   
+                if (string.IsNullOrWhiteSpace(model))              throw new InputValidationException("Model cannot be empty.");
 
                 _shop.SellTV(model);
             }
@@ -118,13 +112,13 @@ namespace Task1
         {
             Console.Clear();
             Console.WriteLine($"Number of sales: {_shop.Count}");
-            Console.WriteLine($"Total revenue: {_shop.GetTotalRevenue():F2} $.");
+            Console.WriteLine($"Total revenue: {_shop.GetTotalRevenue():F2}$.");
         }
 
         private static void ChangePriceMenu()
         {
             Console.Clear();
-            Console.WriteLine($"Current price: {TV.Price} $.");
+            Console.WriteLine($"Current price: {TV.Price}$.");
             Console.WriteLine("1. Set new price");
             Console.WriteLine("2. Increase price by amount");
             Console.WriteLine("3. Decrease price by amount");
@@ -139,37 +133,33 @@ namespace Task1
                         Console.Write("Enter new price: ");
                         string input = Console.ReadLine() ?? "";
 
-                        if (!double.TryParse(input, out double newPrice))
-                            throw new InputValidationException("Price must be a number.");
-
-                        TV.Price = newPrice;
-                        Console.WriteLine($"Price set to {TV.Price} $.");
-                        break;
-
-                    case "2":
-                        Console.Write("Enter amount to increase: ");
-                        string incInput = Console.ReadLine() ?? "";
-
-                        if (!double.TryParse(incInput, out double incAmount))
-                            throw new InputValidationException("Amount must be a number.");
+                        if (!double.TryParse(input, out double newPrice))     throw new InputValidationException("Price must be a number.");
+                                                                              
+                        TV.Price = newPrice;                                  
+                        Console.WriteLine($"Price set to {TV.Price}$.");      
+                        break;                                                
+                                                                              
+                    case "2":                                                 
+                        Console.Write("Enter amount to increase: ");          
+                        string incInput = Console.ReadLine() ?? "";           
+                                                                              
+                        if (!double.TryParse(incInput, out double incAmount)) throw new InputValidationException("Amount must be a number.");
 
                         TV.IncreasePrice(incAmount);
-                        Console.WriteLine($"Price increased by {incAmount}. New price: {TV.Price} $.");
+                        Console.WriteLine($"Price increased by {incAmount}. New price: {TV.Price}$.");
                         break;
 
                     case "3":
                         Console.Write("Enter amount to decrease: ");
                         string decInput = Console.ReadLine() ?? "";
 
-                        if (!double.TryParse(decInput, out double decAmount))
-                            throw new InputValidationException("Amount must be a number.");
+                        if (!double.TryParse(decInput, out double decAmount)) throw new InputValidationException("Amount must be a number.");
 
                         TV.DecreasePrice(decAmount);
-                        Console.WriteLine($"Price decreased by {decAmount}. New price: {TV.Price} $.");
+                        Console.WriteLine($"Price decreased by {decAmount}. New price: {TV.Price}$.");
                         break;
 
-                    default:
-                        throw new InvalidMenuChoiceException("Invalid choice. Choose 1, 2 or 3.");
+                    default: throw new InvalidMenuChoiceException("Invalid choice. Choose 1, 2 or 3.");
                 }
             }
             catch (ArgumentException ex)

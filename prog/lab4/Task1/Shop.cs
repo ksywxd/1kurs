@@ -73,8 +73,7 @@ namespace Task1
             Validator.ValidModel(newModel, _tvList);
 
             if (newID == 0) { newID = GenerateUniqueId(); }
-
-            else { Validator.ValidID(newID, _tvList); }
+            else            { Validator.ValidID(newID, _tvList); }
 
             _tvList.Add(new TV(newModel, newID));
         }
@@ -83,8 +82,7 @@ namespace Task1
         {
             TV? tv = _tvList.SingleOrDefault(t => t.Model.Equals(model, StringComparison.OrdinalIgnoreCase));
 
-            if (tv == null)
-                throw new InvalidOperationException($"TV '{model}' not found.");
+            if (tv == null) throw new InvalidOperationException($"TV '{model}' not found.");
 
             _tvList.Remove(tv);
             _purchaseCount++;
@@ -95,8 +93,7 @@ namespace Task1
         {
             TV? tv = _tvList.SingleOrDefault(t => t.ID == id);
 
-            if (tv == null)
-                throw new InvalidOperationException($"TV with ID {id} not found.");
+            if (tv == null) throw new InvalidOperationException($"TV with ID {id} not found.");
 
             _tvList.Remove(tv);
             _purchaseCount++;
@@ -106,9 +103,9 @@ namespace Task1
         public void ShowInv()
         {
             Console.Clear();
-            Console.WriteLine($"\nShop name: {Name}");
-            Console.WriteLine($"Price: {TV.Price} $.");
-            Console.WriteLine($"Sold: {_purchaseCount} pcs.");
+            Console.WriteLine($"Shop name: {Name}");
+            Console.WriteLine($"Price: {TV.Price}$.");
+            Console.WriteLine($"Sold: {_purchaseCount}pcs.");
             if (_tvList.Count == 0)
             {
                 Console.WriteLine("The assortment is empty.");

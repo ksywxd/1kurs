@@ -42,18 +42,18 @@ namespace Task1
         public TV(string newModel, int newID)
         {
             _model = newModel;
-            _id = newID;
+            _id    = newID;
         }
         
         public static void IncreasePrice(double amount)
         {
-            if (amount < 0) throw new ArgumentException("Amount must be positive.");
+            if (amount < 0)          throw new ArgumentException("Amount must be positive.");
             _price += amount;
         }
 
         public static void DecreasePrice(double amount)
         {
-            if (amount < 0) throw new ArgumentException("Amount must be positive.");
+            if (amount < 0)          throw new ArgumentException("Amount must be positive.");
             if (_price - amount < 0) throw new ArgumentException("Invalid amount. Current price is less than the entered amount.");
             _price -= amount;
         }

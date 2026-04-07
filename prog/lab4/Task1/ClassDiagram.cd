@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Task1.TV">
+    <Position X="4" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAQAQgAAAEgBAAAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>TV.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Task1.Shop">
+    <Position X="1.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAEIAAAAEQAAAAAAAAAAAQAACAAAAAAQCgAABAAAAA=</HashCode>
+      <FileName>Shop.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_instance" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="_tvList" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

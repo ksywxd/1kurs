@@ -6,7 +6,7 @@ namespace Task1
     {
         static void Main()
         {
-            TV.Price = 500;
+            TV.Price  = 500;
             Shop shop = Shop.Instance;
             shop.Name = "TV SHOP";
 
