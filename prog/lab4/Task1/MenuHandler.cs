@@ -35,14 +35,14 @@ namespace Task1
                     {
                         case "1": AddTVMenu();       break;
                         case "2": SellTVMenu();      break;
-                        case "3": _shop.ShowInv();   break;
+                        case "3": ShowInventory();   break;
                         case "4": ShowRevenue();     break;
                         case "5": ChangePriceMenu(); break;
                         case "6": exit = true;       break;
                         default: throw new InvalidMenuChoiceException($"Invalid choice: '{choice}'. Please enter 1-6.");
                     }
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
                     Console.WriteLine($"Error: {ex.Message}");
                 }
@@ -72,7 +72,7 @@ namespace Task1
             if (!string.IsNullOrWhiteSpace(idInput) && !hasId) throw new InputValidationException("ID must be a number.");
 
             if (hasId) _shop.AddTV(model, id);
-            else       _shop.AddTV(model);
+            else _shop.AddTV(model);
 
             Console.WriteLine("TV added successfully.");
         }
@@ -86,26 +86,30 @@ namespace Task1
             Console.Write("Choose a method: ");
             string opt = Console.ReadLine() ?? "";
 
-            if (opt == "1")
+            try
             {
-                Console.Write("Enter ID: ");
+                string message;
+                if (opt == "1")
+                {
+                    Console.Write("Enter ID: ");
+                    if (!int.TryParse(Console.ReadLine(), out int id))
+                        throw new InputValidationException("ID must be a number.");
+                    message = _shop.SellTV(id);
+                }
+                else if (opt == "2")
+                {
+                    Console.Write("Enter model: ");
+                    string model = Console.ReadLine() ?? "";
 
-                if (!int.TryParse(Console.ReadLine(), out int id)) throw new InputValidationException("ID must be a number.");
-                                                                   
-                _shop.SellTV(id);                                  
-            }                                                      
-                                                                   
-            else if (opt == "2")                                   
-            {                                                      
-                Console.Write("Enter model: ");                    
-                string model = Console.ReadLine() ?? "";           
-                                                                   
-                if (string.IsNullOrWhiteSpace(model))              throw new InputValidationException("Model cannot be empty.");
+                    if (string.IsNullOrWhiteSpace(model)) throw new InputValidationException("Model cannot be empty.");
 
-                _shop.SellTV(model);
+                    message = _shop.SellTV(model);
+                }
+                else { throw new InvalidMenuChoiceException("Invalid choice. Choose 1 or 2."); }
+
+                Console.WriteLine(message);
             }
-
-            else { throw new InvalidMenuChoiceException("Invalid choice. Choose 1 or 2."); }
+            catch (Exception ex) { Console.WriteLine($"Error: {ex.Message}"); }
         }
 
         private void ShowRevenue()
@@ -133,16 +137,16 @@ namespace Task1
                         Console.Write("Enter new price: ");
                         string input = Console.ReadLine() ?? "";
 
-                        if (!double.TryParse(input, out double newPrice))     throw new InputValidationException("Price must be a number.");
-                                                                              
-                        TV.Price = newPrice;                                  
-                        Console.WriteLine($"Price set to {TV.Price}$.");      
-                        break;                                                
-                                                                              
-                    case "2":                                                 
-                        Console.Write("Enter amount to increase: ");          
-                        string incInput = Console.ReadLine() ?? "";           
-                                                                              
+                        if (!double.TryParse(input, out double newPrice)) throw new InputValidationException("Price must be a number.");
+
+                        TV.Price = newPrice;
+                        Console.WriteLine($"Price set to {TV.Price}$.");
+                        break;
+
+                    case "2":
+                        Console.Write("Enter amount to increase: ");
+                        string incInput = Console.ReadLine() ?? "";
+
                         if (!double.TryParse(incInput, out double incAmount)) throw new InputValidationException("Amount must be a number.");
 
                         TV.IncreasePrice(incAmount);
@@ -167,5 +171,12 @@ namespace Task1
                 Console.WriteLine($"Error: {ex.Message}");
             }
         }
+
+        private void ShowInventory()
+        {
+            Console.Clear();
+            Console.WriteLine(_shop.ShowInv());
+        }
     }
 }
+    

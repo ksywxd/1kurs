@@ -78,7 +78,7 @@ namespace Task1
             _tvList.Add(new TV(newModel, newID));
         }
 
-        public void SellTV(string model)
+        public string SellTV(string model)
         {
             TV? tv = _tvList.SingleOrDefault(t => t.Model.Equals(model, StringComparison.OrdinalIgnoreCase));
 
@@ -86,10 +86,10 @@ namespace Task1
 
             _tvList.Remove(tv);
             _purchaseCount++;
-            Console.WriteLine($"Sold {tv.Model} (ID {tv.ID})");
+            return $"Sold {tv.Model} (ID {tv.ID})";
         }
 
-        public void SellTV(int id)
+        public string SellTV(int id)
         {
             TV? tv = _tvList.SingleOrDefault(t => t.ID == id);
 
@@ -97,25 +97,24 @@ namespace Task1
 
             _tvList.Remove(tv);
             _purchaseCount++;
-            Console.WriteLine($"Sold {tv.Model} (ID {tv.ID})");
+            return $"Sold {tv.Model} (ID {tv.ID})";
         }
 
-        public void ShowInv()
+        public string ShowInv()
         {
-            Console.Clear();
-            Console.WriteLine($"Shop name: {Name}");
-            Console.WriteLine($"Price: {TV.Price}$.");
-            Console.WriteLine($"Sold: {_purchaseCount}pcs.");
+            string result = $"Shop name: {Name}" +
+                            $"\nPrice: {TV.Price}$." +
+                            $"\nSold: {_purchaseCount}pcs.\n";
+
             if (_tvList.Count == 0)
+                result += "The assortment is empty.";
+            else
             {
-                Console.WriteLine("The assortment is empty.");
-                return;
+                result += "TVs in stock:\n";
+                foreach (var tv in _tvList)
+                    result += $"  ID: {tv.ID}, Model: {tv.Model}\n";
             }
-            Console.WriteLine("TVs in stock:");
-            foreach (var tv in _tvList)
-            {
-                Console.WriteLine($"  ID: {tv.ID}, Model: {tv.Model}");
-            }
+            return result;
         }
 
         public double GetTotalRevenue()
