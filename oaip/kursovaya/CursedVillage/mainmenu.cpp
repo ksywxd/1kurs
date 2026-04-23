@@ -37,7 +37,7 @@ MainMenu::MainMenu(QWidget *parent) : QWidget(parent)
         "   font-size: 20px;"
         "   padding: 15px;"
         "   min-width: 250px;"
-        "   border-radius: 10px; }"
+        "   border-radius: 10px;"
         "   min-width: 250px;"
         "}"
         "QPushButton:hover {"
@@ -130,7 +130,7 @@ MainMenu::MainMenu(QWidget *parent) : QWidget(parent)
 
 
     //задний фон
-    m_backgroundMenu.load(":/images/images/backgroundMenu1.jpg");   // путь к картинке в ресурсах
+    m_backgroundMenu.load(":/images/images/backgroundMenu.jpg");   // путь к картинке в ресурсах
     if (!m_backgroundMenu.isNull()) {
         updateBackground();            // установить масштабированный фон
         setAutoFillBackground(true);
@@ -151,6 +151,7 @@ MainMenu::MainMenu(QWidget *parent) : QWidget(parent)
     m_mediaPlayer -> setVolume(10);
     m_mediaPlayer -> play();
 
+    //коннекты
     connect(m_newGameBtn,  &QPushButton::clicked, this, &MainMenu::onNewGame);
     connect(m_continueBtn, &QPushButton::clicked, this, &MainMenu::onContinue);
     connect(m_exitBtn,     &QPushButton::clicked, this, &MainMenu::onExit);

@@ -10,22 +10,30 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    blacksmithwindow.cpp \
+    forestwindow.cpp \
     gamewindow.cpp \
+    gateswindow.cpp \
     introwindow.cpp \
     main.cpp \
     mainmenu.cpp \
     mainwindow.cpp \
     pausemenu.cpp \
-    villagewindow.cpp
+    villagewindow.cpp \
+    witchwindow.cpp
 
 HEADERS += \
+    blacksmithwindow.h \
+    forestwindow.h \
     gamestate.h \
     gamewindow.h \
+    gateswindow.h \
     introwindow.h \
     mainmenu.h \
     mainwindow.h \
     pausemenu.h \
-    villagewindow.h
+    villagewindow.h \
+    witchwindow.h
 
 FORMS += \
     mainwindow.ui

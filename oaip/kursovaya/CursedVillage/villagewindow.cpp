@@ -1,72 +1,115 @@
 #include "villagewindow.h"
+#include <QTimer>
 
 VillageWindow::VillageWindow(QWidget *parent) : GameWindow(parent)
 {
+    setupBaseUI();
+
     m_backgroundPixmap.load(":/images/images/village.jpg");
-    setAutoFillBackground(true);
+    // m_characterLabel->setPixmap(QPixmap(":/images/char/zoiga.png"));
 
-    QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->setContentsMargins(30, 30, 30, 30); // отступы от краев экрана
+    m_blacksmithBtn = new QPushButton("Кузница",  this);
+    m_witchBtn      = new QPushButton("Знахарня", this);
+    m_forestBtn     = new QPushButton("Лес",      this);
+    m_gatesBtn      = new QPushButton("Замок",    this);
 
-    // место для картинки
-    m_imageLabel = new QLabel(this);
-    m_imageLabel->setAlignment(Qt::AlignCenter);
-    layout      -> addWidget(m_imageLabel, 1); // 1 чтоб не растягивалась
+    m_blacksmithBtn->setStyleSheet(styleSheet());
+    m_witchBtn     ->setStyleSheet(styleSheet());
+    m_forestBtn    ->setStyleSheet(styleSheet());
+    m_gatesBtn     ->setStyleSheet(styleSheet());
 
-    // место для диалога
-    m_dialogLabel = new QLabel(this);
-    m_dialogLabel->setWordWrap(true);      // перенос текста
-    m_dialogLabel->setMinimumHeight(180);
+    m_buttonsCol->addWidget(m_blacksmithBtn);
+    m_buttonsCol->addWidget(m_witchBtn);
+    m_buttonsCol->addWidget(m_forestBtn);
+    m_buttonsCol->addWidget(m_gatesBtn);
 
-    m_dialogLabel->setStyleSheet(
-        "QLabel {"
-        "   border: 4px solid Chocolate;"
-        "   background-color: rgba(20, 20, 20, 200);"
-        "   color: white;"
-        "   font-size: 24px;"
-        "   padding: 20px;"
-        "   border-radius: 12px;"
-        "}"
-        );
-    layout->addWidget(m_dialogLabel);
+    //коннекты
+    connect(m_blacksmithBtn, &QPushButton::clicked, this, [this](){ goToScene("blacksmith"); });
+    connect(m_witchBtn,      &QPushButton::clicked, this, [this](){ goToScene("witch"); });
+    connect(m_forestBtn,     &QPushButton::clicked, this, [this](){ goToScene("forest"); });
+    connect(m_gatesBtn,      &QPushButton::clicked, this, [this](){ goToScene("gates"); });
 }
 
 void VillageWindow::onEnterScene()
 {
+    m_isDialogFinished = getState()->getFlag("was_in_village");
+
+    if (m_buttonsContainer->isVisible() && m_isDialogFinished) {
+        return;
+    }
+
     m_dialogParts.clear();
     m_dialogIndex = 0;
 
-    if (!getState()->getFlag("was_in_village")) {
+    if (!m_isDialogFinished) {
         // первый раз
         m_dialogParts << "Вы входите в деревню и стоите на деревенской площади. "
                       << "Тишина кажется подозрительной..."
                       << "Староста Зойга, пожилая женщина, подходит к вам."
-                      << "Староста Зойга: Спасибо, что пришли! Барон не даёт нам житья. Ночью из замка доносятся крики."
-                        " Кузнец Крупеня и знахарка Даниэла могут навести на мысль, как с ним справиться."
-                        " Будьте осторожны!";
+                      << "Староста Зойга: Спасибо, что пришли!"
+                      << "Барон не даёт нам житья. Ночью из замка доносятся крики."
+                      << " Кузнец Крупеня и знахарка Даниэла могут навести на мысль, как с ним справиться."
+                      << " Будьте осторожны!";
 
         typeText(m_dialogParts[m_dialogIndex], m_dialogLabel);
-        m_enter      ->show();
+        m_enter->show();
+        QTimer::singleShot(0, this, [this]() {
+            updateEnterPosition();
+        });
+
+        hideActionButtons();
     } else {
         // уже были
         m_dialogParts << "Вы снова в деревне. Здесь ничего не изменилось.";
-
+        saveGame();
         typeText(m_dialogParts[m_dialogIndex], m_dialogLabel);
-        m_enter      ->hide();
+        m_enter->hide();
+        showActionButtons();
     }
 
+    QTimer::singleShot(100, this, [this]() { updateEnterPosition(); });
     updateBackground();
 }
 
 void VillageWindow::enter()
 {
+    if (m_isDialogFinished) return;
+
+    //скип
+    if (m_typeTimer && m_typeTimer->isActive()) {
+        m_typeTimer->stop();
+        m_dialogLabel->setText(m_fullText);
+        return;
+    }
+
     if (m_dialogIndex < m_dialogParts.size() - 1) {
         m_dialogIndex++;
         typeText(m_dialogParts[m_dialogIndex], m_dialogLabel);
-    } else {
-        // текст закончился
-        getState()   ->setFlag("was_in_village", true);
-        m_enter      ->hide();
-        typeText(m_dialogParts[m_dialogIndex], m_dialogLabel);
     }
+    else {
+        // текст закончился
+        m_isDialogFinished = true;
+        getState()->setFlag("was_in_village", true);
+        saveGame();
+        m_enter->hide();
+        showActionButtons();
+    }
+}
+
+void VillageWindow::showActionButtons()
+{
+    m_buttonsContainer->setVisible(true);
+}
+
+void VillageWindow::hideActionButtons()
+{
+    m_buttonsContainer->setVisible(false);
+}
+
+void VillageWindow::resetWindow() {
+    m_isDialogFinished = false;
+    m_dialogIndex = 0;
+    m_dialogActive = false;
+    hideActionButtons();
+    if (m_dialogLabel) m_dialogLabel->clear();
 }

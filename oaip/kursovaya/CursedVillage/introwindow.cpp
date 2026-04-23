@@ -14,10 +14,10 @@ IntroWindow::IntroWindow(QWidget *parent) : GameWindow(parent)
     m_mainLayout->addStretch();
 
     //текст
-    m_textLabel  = new QLabel(this);
-    m_textLabel  -> setAlignment(Qt::AlignCenter);
-    m_textLabel  -> setWordWrap(true);
-    m_mainLayout -> addWidget(m_textLabel);
+    m_dialogLabel  = new QLabel(this);
+    m_dialogLabel  -> setAlignment(Qt::AlignCenter);
+    m_dialogLabel  -> setWordWrap(true);
+    m_mainLayout   -> addWidget(m_dialogLabel);
 
     //кнопка перехода в деревню
     m_actionButton = new QPushButton(this);
@@ -40,12 +40,12 @@ void IntroWindow::onEnterScene()
                     << "Перед смертью он проклял своих убийц."
                     << "Говорят, его призрак до сих пор бродит по залам, не находя покоя."
                     << "Вы — странник, прибывший в деревню у подножия холма. Местные молят о помощи.";
-
+    saveGame();
     m_prologueIndex = 0;
     m_inPrologue = true;
-    m_textLabel -> setText(m_prologueParts[m_prologueIndex]);
+    m_dialogLabel -> setText(m_prologueParts[m_prologueIndex]);
 
-    m_textLabel -> setStyleSheet(
+    m_dialogLabel -> setStyleSheet(
         "color: white;"
         "font-size: 28px;"
         "font-family: 'Arial';"
@@ -81,7 +81,7 @@ void IntroWindow::enter()
 {
     if (m_prologueIndex < m_prologueParts.size() - 1) {
         m_prologueIndex++;
-        m_textLabel -> setText(m_prologueParts[m_prologueIndex]);
+        m_dialogLabel -> setText(m_prologueParts[m_prologueIndex]);
     } else {
         finishPrologue();
     }

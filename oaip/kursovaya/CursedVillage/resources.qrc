@@ -5,6 +5,13 @@
         <file>images/backgroundMenu1.jpg</file>
         <file>images/title.png</file>
         <file>images/village.jpg</file>
+        <file>images/blacksmith.jpg</file>
+        <file>images/blacksmith.png</file>
+        <file>images/witch.png</file>
+        <file>images/witch.jpg</file>
+        <file>images/forest.jpg</file>
+        <file>images/gates.jpg</file>
+        <file>images/backgroundMenu.jpg</file>
     </qresource>
     <qresource prefix="/audio">
         <file>audio/undertaleMenu.wav</file>
@@ -12,4 +19,5 @@
         <file>audio/type_click1.wav</file>
         <file>audio/type_click2.wav</file>
     </qresource>
+    <qresource prefix="/"/>
 </RCC>

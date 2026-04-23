@@ -9,18 +9,17 @@ class IntroWindow : public GameWindow
 
 public:
     explicit IntroWindow(QWidget *parent = nullptr);
+    void onEnterScene() override;
 
 protected:
-    void onEnterScene() override;
     void enter()        override;
     void onActionBtn()  override;
 
 private:
     void finishPrologue();
 
-    QVBoxLayout *m_mainLayout;
-    QLabel      *m_textLabel;
     QPushButton *m_actionButton;
+    QVBoxLayout *m_mainLayout;
     QStringList  m_prologueParts;
 
     int  m_prologueIndex;

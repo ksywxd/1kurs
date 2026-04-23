@@ -10,16 +10,24 @@ class VillageWindow : public GameWindow
 public:
     explicit VillageWindow(QWidget *parent = nullptr);
 
-private:
-    QLabel *m_dialogLabel;
-    QLabel *m_imageLabel;
-
-    QStringList m_dialogParts;
-    int m_dialogIndex;
-
-protected:
+    void resetWindow()  override;
     void onEnterScene() override;
     void enter()        override;
+
+private:
+    void showActionButtons();
+    void hideActionButtons();
+
+    //кнопки
+    QPushButton *m_blacksmithBtn;
+    QPushButton *m_witchBtn;
+    QPushButton *m_forestBtn;
+    QPushButton *m_gatesBtn;
+
+    bool m_dialogActive;
+
+protected:
+
 };
 
 #endif // VILLAGEWINDOW_H

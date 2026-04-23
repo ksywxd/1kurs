@@ -7,12 +7,76 @@
 #include <QDir>
 #include <QTimer>
 
+void GameWindow::setupBaseUI() {
+    //перс
+    m_characterLabel = new QLabel(this);
+    m_characterLabel->setScaledContents(true);
+
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(40, 40, 60, 40);
+
+    //справа
+    m_buttonsContainer = new QWidget(this);
+    m_buttonsContainer->setVisible(false);
+    QHBoxLayout *hLayout = new QHBoxLayout(m_buttonsContainer);
+
+    m_buttonsCol = new QVBoxLayout(); //столбец
+    m_buttonsCol->setSpacing(15);
+
+    hLayout->addStretch(5); //к правому краю
+    hLayout->addLayout(m_buttonsCol);
+    hLayout->addStretch(1); //чуть чуть левее
+
+    mainLayout->addStretch(1);   // сверху
+    mainLayout->addWidget(m_buttonsContainer);
+    mainLayout->addStretch(1);   // снизу
+
+    m_buttonsContainer->setStyleSheet(
+        "QPushButton {"
+        "    background-color: rgba(45, 25, 15, 230);" // коричневый
+        "    color: #e6c9a8;"                         // тип золото
+        "    border: 2px solid #8b5a2b;"              // рамка бронзовая
+        "    border-radius: 10px;"                    // скругление
+        "    padding: 15px;"
+        "    font-size: 24px;"
+        "    font-weight: bold;"
+        "    min-width: 200px;"
+        "}"
+        "QPushButton:hover {"
+        "    background-color: rgba(80, 45, 25, 255);" // подсветка при наведении
+        "    border-color: #d4a373;"                  // свечение рамки
+        "}"
+        );
+
+    //окно диалога
+    m_dialogLabel = new QLabel(this);
+    m_dialogLabel->setWordWrap(true);
+    m_dialogLabel->setMinimumHeight(180);
+    m_dialogLabel->setStyleSheet("border: 4px solid Chocolate;"
+                                 "background: rgba(20,20,20,220);"
+                                 "color: white;"
+                                 "padding: 20px;"
+                                 "border-radius: 12px;"
+                                 "font-size: 22px;");
+
+    mainLayout->addWidget(m_dialogLabel);
+
+    // перс за диалогом
+    m_characterLabel->lower();
+    m_dialogLabel->raise();
+}
+
 GameWindow::GameWindow(QWidget *parent) : QWidget(parent)
 {
+    m_characterLabel   = nullptr;
+    m_dialogLabel      = nullptr;
+    m_buttonsContainer = nullptr;
+    m_buttonsCol       = nullptr;
+
     //enter
     m_enter = new QLabel("Enter", this);
     m_enter -> setStyleSheet("color: rgba(255,255,255,100); font-size: 18px;");
-    m_enter -> adjustSize(); // вычисляем размер
+    m_enter -> adjustSize(); // вычислить размер
     m_enter -> hide();
 
     //пауза
@@ -34,7 +98,7 @@ GameWindow::GameWindow(QWidget *parent) : QWidget(parent)
 
     m_typingSound = new QSoundEffect(this);
     m_typingSound ->setSource(QUrl("qrc:/audio/audio/type_click1.wav"));
-    m_typingSound ->setVolume(0.2);
+    m_typingSound ->setVolume(0.1);
 
     //коннекты
     connect(m_pauseMenu, &PauseMenu::resumeClicked,     this, &GameWindow::onResumeGame);
@@ -56,8 +120,6 @@ void GameWindow::startNewGame()
 {
     m_state -> clear();
     m_state -> setCurrentScene("intro");
-    goToScene("intro");
-    setFocus();
 }
 
 void GameWindow::saveGame()
@@ -89,14 +151,14 @@ void GameWindow::saveGame()
 void GameWindow::loadGame(const GameState& state)
 {
     *m_state = state;
-    goToScene(m_state -> getCurrentScene());
+    onEnterScene();
 }
 
 void GameWindow::goToScene(const QString& id)
 {
     qDebug() << "Переход на сцену:" << id;
     m_state -> setCurrentScene(id);
-    onEnterScene(); // вызовет реализацию наследника
+    emit sceneFinished(id);
     setFocus();
 }
 
@@ -112,26 +174,25 @@ void GameWindow::enter()
 
 void GameWindow::keyPressEvent(QKeyEvent *event)
 {
-    // 1. ESC всегда переключает паузу
+    //esc пауза
     if (event->key() == Qt::Key_Escape) {
         togglePause();
         event->accept();
         return;
     }
 
-    // 2. F11 игнорируем, чтобы оно дошло до MainWindow
+    //игнор во время ивента чтоб до мейнвинд дошло
     if (event->key() == Qt::Key_F11) {
         event->ignore();
         return;
     }
 
-    // 3. Если открыта пауза, блокируем только игровые клавиши (Enter и т.д.)
+    //игнор всего в паузе
     if (m_pauseMenu->isVisible()) {
-        event->accept(); // Поглощаем остальные клавиши, чтобы персонаж не ходил под паузой
+        event->accept();
         return;
     }
 
-    // 4. Обычная логика игры (когда паузы нет)
     if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
         enter();
     }
@@ -191,6 +252,21 @@ void GameWindow::resizeEvent(QResizeEvent *event) {
         m_pauseMenu->setGeometry(0, 0, width(), height());
     }
 
+    //для перса
+    if (m_characterLabel && m_characterLabel->pixmap()) {
+        int h = height() * 0.8; // 80% от высоты окна
+        int w = (double)h / m_characterLabel->pixmap()->height() * m_characterLabel->pixmap()->width();
+        m_characterLabel->setFixedSize(w, h);
+
+        // чуть левее центра, низ уходит за диалоговое окно
+        int x = (width() / 2) - w - 80;
+        int y = height() - h + 130; // 130 это глубина погружения за диалог
+        m_characterLabel->move(x, y);
+    }
+    else if (m_characterLabel) {
+        m_characterLabel->hide();
+    }
+
     updateBackground();
     updateEnterPosition();
 }
@@ -222,6 +298,7 @@ void GameWindow::typeText(const QString& text, QLabel* targetLabel, int speed) {
     m_typeTimer  ->start(speed);  // го
 }
 
+//звук печати
 void GameWindow::onTypeTick() {
     //если пауза
     if (m_pauseMenu && m_pauseMenu->isVisible()) {
@@ -252,4 +329,15 @@ void GameWindow::stopTyping() {
     m_currentText = "";
     m_charIndex = 0;
     if (m_activeLabel) m_activeLabel->setText("");
+}
+
+void GameWindow::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event);
+    QPainter painter(this);
+
+    if (!m_backgroundPixmap.isNull()) {
+        // Отрисовка фона строго по размеру текущего окна
+        painter.drawPixmap(0, 0, width(), height(), m_backgroundPixmap);
+    }
 }

@@ -19,6 +19,22 @@ public:
     const QSet<QString>& getInventory() const   { return m_inventory; }
     void setInventory(const QSet<QString>& inv) { m_inventory = inv; }
 
+    //проверка нескольких предметов
+    bool hasAll(const QStringList& items) const {
+        for (const QString& item : items) {
+            if (!m_inventory.contains(item)) return false;
+        }
+        return true;
+    }
+
+    //проверка на хотя бы 1 предмет
+    bool hasAny(const QStringList& items) const {
+        for (const QString& item : items) {
+            if (m_inventory.contains(item)) return true;
+        }
+        return false;
+    }
+
     // флаги
     void setFlag(const QString& flag, bool value = true) { m_flags[flag] = value; }
     void setFlags(const QMap<QString, bool>& f)          { m_flags = f; }
