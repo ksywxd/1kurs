@@ -56,15 +56,16 @@ namespace Task1
             }
 
             // 3. Вывод списка товаров по фамилии
-            Console.WriteLine("\n3. СПИСОК ТОВАРОВ :");
+            Console.WriteLine("\n3. СПИСОК ТОВАРОВ (по фамилии):");
             ShowCustomerProducts("Иванов");
             ShowCustomerProducts("Сидоров");
 
             // 4. Вывод суммы заказа по фамилии
-            Console.WriteLine("\n4. СУММА ЗАКАЗА КЛИЕНТА:");
+            Console.WriteLine("\n4. СУММА ЗАКАЗА КЛИЕНТА (по фамилии):");
             ShowCustomerTotal("Иванов");
             ShowCustomerTotal("Петров");
             ShowCustomerTotal("Сидоров");
+            ShowCustomerTotal("бабабой");
 
             // 5. Демонстрация обработки исключений
             Console.WriteLine("\n5. ПРОВЕРКА ИСКЛЮЧЕНИЙ:");
