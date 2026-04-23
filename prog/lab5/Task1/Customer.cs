@@ -8,7 +8,7 @@ namespace Task1
     {
         private readonly List<Product> _lstProd = new List<Product>();
 
-        public string LastName { get; set; }
+        public string LastName { get; private set; }
 
         public IReadOnlyList<Product> LstProd
         {

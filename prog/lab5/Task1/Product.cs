@@ -8,9 +8,9 @@ namespace Task1
 {
     public class Product
     {
-        public double Price { get; set; }
-        public string Title { get; set; }
-        public Category Category { get; set; }
+        public double Price { get; private set; }
+        public string Title { get; private set; }
+        public Category Category { get; private set; }
 
         public Product(string title, double price, Category category)
         {
