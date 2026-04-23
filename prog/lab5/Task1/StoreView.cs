@@ -29,45 +29,45 @@ namespace Task1
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"   Ошибка: {ex.Message}");
+                Console.WriteLine($"   Ошибка каталога: {ex.Message}");
             }
 
             // Показываем каталог
-            Console.WriteLine("\n   Каталог товаров:");
+            Console.WriteLine("\n   КАТАЛОГ ТАВАРОВ:");
             foreach (Product product in _store.Catalog)
             {
-                Console.WriteLine($"   - {product}");
+                Console.WriteLine($"   * {product}");
             }
 
             // 2. Регистрация заказов
-            Console.WriteLine("\n2. Регистрация заказов:");
+            Console.WriteLine("\n2. РЕГИСТРАЦИЯ ЗАКАЗОВ:");
             try
             {
                 _store.RegisterOrder("Иванов", "Ноутбук");
-                _store.RegisterOrder("Иванов", "Книга C#");
+                _store.RegisterOrder("Иванов", "Книга");
                 _store.RegisterOrder("Петров", "Футболка");
                 _store.RegisterOrder("Сидоров", "Шоколад");
                 _store.RegisterOrder("Сидоров", "Футболка");
-                Console.WriteLine("   Заказы зарегистрированы.");
+                Console.WriteLine("   Заказы успешно оформлены.");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"   Ошибка: {ex.Message}");
+                Console.WriteLine($"   Ошибка заказа: {ex.Message}");
             }
 
             // 3. Вывод списка товаров по фамилии
-            Console.WriteLine("\n3. Список товаров клиента:");
+            Console.WriteLine("\n3. СПИСОК ТОВАРОВ :");
             ShowCustomerProducts("Иванов");
             ShowCustomerProducts("Сидоров");
 
             // 4. Вывод суммы заказа по фамилии
-            Console.WriteLine("\n4. Сумма заказа клиента:");
+            Console.WriteLine("\n4. СУММА ЗАКАЗА КЛИЕНТА:");
             ShowCustomerTotal("Иванов");
             ShowCustomerTotal("Петров");
             ShowCustomerTotal("Сидоров");
 
             // 5. Демонстрация обработки исключений
-            Console.WriteLine("\n5. Проверка обработки ошибок:");
+            Console.WriteLine("\n5. ПРОВЕРКА ИСКЛЮЧЕНИЙ:");
             try
             {
                 Console.WriteLine("   Попытка добавить товар с отрицательной ценой...");
@@ -115,7 +115,7 @@ namespace Task1
                 {
                     foreach (Product product in products)
                     {
-                        Console.WriteLine($"      - {product.Title} ({product.Price:C})");
+                        Console.WriteLine($"      * {product.Title} ({product.Price:C})");
                     }
                 }
             }
