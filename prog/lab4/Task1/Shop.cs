@@ -86,6 +86,7 @@ namespace Task1
 
             _tvList.Remove(tv);
             _purchaseCount++;
+
             return $"Sold {tv.Model} (ID {tv.ID})";
         }
 
@@ -97,6 +98,7 @@ namespace Task1
 
             _tvList.Remove(tv);
             _purchaseCount++;
+
             return $"Sold {tv.Model} (ID {tv.ID})";
         }
 
@@ -106,14 +108,16 @@ namespace Task1
                             $"\nPrice: {TV.Price}$." +
                             $"\nSold: {_purchaseCount}pcs.\n";
 
-            if (_tvList.Count == 0)
-                result += "The assortment is empty.";
+            if (_tvList.Count == 0) result += "The assortment is empty.";
+
+
             else
             {
                 result += "TVs in stock:\n";
                 foreach (var tv in _tvList)
                     result += $"  ID: {tv.ID}, Model: {tv.Model}\n";
             }
+
             return result;
         }
 

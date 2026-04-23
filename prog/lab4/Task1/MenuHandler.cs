@@ -65,6 +65,7 @@ namespace Task1
             if (string.IsNullOrWhiteSpace(model)) throw new InputValidationException("Model cannot be empty.");
 
             Console.Write("Enter ID (leave blank or 0 for automatic ID): ");
+
             string idInput = Console.ReadLine() ?? "";
             int id = 0;
             bool hasId = !string.IsNullOrWhiteSpace(idInput) && int.TryParse(idInput, out id);
@@ -92,8 +93,9 @@ namespace Task1
                 if (opt == "1")
                 {
                     Console.Write("Enter ID: ");
-                    if (!int.TryParse(Console.ReadLine(), out int id))
-                        throw new InputValidationException("ID must be a number.");
+
+                    if (!int.TryParse(Console.ReadLine(), out int id)) throw new InputValidationException("ID must be a number.");
+                    
                     message = _shop.SellTV(id);
                 }
                 else if (opt == "2")
